@@ -2,8 +2,6 @@ package com.littleeyelabs.android.logging;
 
 import android.util.Log;
 
-import com.littleeyelabs.clarkkent.BuildConfig;
-
 /**
  * Logging wrapper.
  * 
@@ -16,15 +14,23 @@ import com.littleeyelabs.clarkkent.BuildConfig;
  * @author gaurav lochan
  */
 public class Logger {
-	// Note: If including this as source, uncomment this line and point to the 
-	// BuildConfig in your project, to automatically change logging levels.
 //	private static int LEVEL = (BuildConfig.DEBUG) ? Log.DEBUG : Log.INFO;
 	private static int LEVEL = Log.INFO;
 
+	private static LogFile logFile = null;
+
 	/**
-	 * Call this to change the logging level.  Usually not required, but
-	 * can be used to change log level, when debugging an issue in a 
-	 * release app.
+	 * Optional: Call it to initialize local file logging
+	 * 
+	 * @param context
+	 */
+	public static void setLogFile(LogFile file) {
+		logFile = file;
+	}
+	
+	/**
+	 * Call this to change the logging level.  can be used to change log level
+	 * at runtime, when debugging a release app
 	 * 
 	 * @param newLevel
 	 */
@@ -45,9 +51,9 @@ public class Logger {
 	}
 
 	
-	// public static void 
 	public static int Error(String tag, String msg, Throwable tr) {
 		if (LEVEL >= Log.ERROR) {
+			if (logFile != null) logFile.log(Log.ERROR, tag, msg, tr);
 			return Log.e(tag, msg, tr);
 		}
 		return 0;
@@ -55,6 +61,7 @@ public class Logger {
 
 	public static int Error(String tag, String msg) {
 		if (LEVEL >= Log.ERROR) {
+			if (logFile != null) logFile.log(Log.ERROR, tag, msg);
 			Log.e(tag, msg);
 		}
 		return 0;
@@ -62,6 +69,7 @@ public class Logger {
 
 	public static int Warn(String tag, String msg, Throwable tr) {
 		if (LEVEL >= Log.WARN) {
+			if (logFile != null) logFile.log(Log.WARN, tag, msg, tr);
 			Log.w(tag, msg, tr);
 		}
 		return 0;
@@ -69,6 +77,7 @@ public class Logger {
 
 	public static int Warn(String tag, String msg) {
 		if (LEVEL >= Log.WARN) {
+			if (logFile != null) logFile.log(Log.WARN, tag, msg);
 			Log.w(tag, msg);
 		}
 		return 0;
@@ -76,6 +85,7 @@ public class Logger {
 
 	public static int Info(String tag, String msg, Throwable tr) {
 		if (LEVEL >= Log.INFO) {
+			if (logFile != null) logFile.log(Log.INFO, tag, msg, tr);
 			Log.i(tag, msg, tr);
 		}
 		return 0;
@@ -83,6 +93,7 @@ public class Logger {
 
 	public static int Info(String tag, String msg) {
 		if (LEVEL >= Log.INFO) {
+			if (logFile != null) logFile.log(Log.INFO, tag, msg);
 			Log.i(tag, msg);
 		}
 		return 0;
@@ -90,6 +101,7 @@ public class Logger {
 
 	public static int Debug(String tag, String msg, Throwable tr) {
 		if (LEVEL >= Log.DEBUG) {
+			if (logFile != null) logFile.log(Log.DEBUG, tag, msg, tr);
 			Log.d(tag, msg, tr);
 		}
 		return 0;
@@ -97,6 +109,7 @@ public class Logger {
 
 	public static int Debug(String tag, String msg) {
 		if (LEVEL >= Log.DEBUG) {
+			if (logFile != null) logFile.log(Log.DEBUG, tag, msg);
 			Log.d(tag, msg);
 		}
 		return 0;
@@ -104,6 +117,7 @@ public class Logger {
 
 	public static int Verbose(String tag, String msg, Throwable tr) {
 		if (LEVEL >= Log.VERBOSE) {
+			if (logFile != null) logFile.log(Log.VERBOSE, tag, msg, tr);
 			Log.v(tag, msg, tr);
 		}
 		return 0;
@@ -111,6 +125,7 @@ public class Logger {
 
 	public static int Verbose(String tag, String msg) {
 		if (LEVEL >= Log.VERBOSE) {
+			if (logFile != null) logFile.log(Log.VERBOSE, tag, msg);
 			Log.v(tag, msg);
 		}
 		return 0;
