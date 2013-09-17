@@ -6,50 +6,54 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
-// TODO: Limit file size
-// TODO: Cache writes
+/**
+ * Initialize this for logs to be written to a local file too
+ * 
+ * TODO: Limit file size (wraparound / use new file)
+ * TODO: Profile performance difference between this and BufferWriter-FileWriter
+ * 
+ * @author gaurav lochan
+ */
 public class LogFile {
 	public final static String TAG = "LogFile";
-	public final static String FILE_NAME = "log.txt";
 	private final PrintStream printStream;
+
+	// Configuration
+	public final static String FILE_NAME = "log.txt";
+	public final static Folder WHERE_TO_WRITE = Folder.SD_CARD; 
+	public final static boolean APPEND = false;
+	
+	int ACCESS_MODE = Context.MODE_PRIVATE; // | MODE_APPEND
 	
 	/**
-	 * Initialize logging to a local file. 
+	 * Initialize logging to a local file. Can return null if this failed.
 	 * 
 	 * @param context
 	 * @param folderType
 	 * @return
 	 */
-	public static LogFile initialize(Context context, Folder folderType) {
-		String baseDir = "";
+	public static LogFile initialize(Context context) {
 		FileOutputStream fos;
 		
-		switch (folderType) {
+		switch (WHERE_TO_WRITE) {
 		case APP_DIR:
-			baseDir = context.getFilesDir().getAbsolutePath();
-			Log.i(TAG, "app_dir = "+baseDir);
 			try {
-				fos = context.openFileOutput(FILE_NAME, Context.MODE_APPEND);
+				int mode = (APPEND) ? Context.MODE_APPEND : Context.MODE_PRIVATE;
+				fos = context.openFileOutput(FILE_NAME, mode);
 			} catch (FileNotFoundException e1) {
 				return null;
 			}
 			break;
 		case SD_CARD:
-			// BUGGY
-			// TODO: Deal with exceptions on particular devices
-			baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-			Log.i(TAG, "app_dir = "+baseDir);
-			File file = new File(baseDir + File.separator + FILE_NAME);
-			file.mkdirs();
-			if (!file.canWrite()) {
-				return null;
-			}
+			File sdFile = new File(context.getExternalFilesDir(null), FILE_NAME);
+			Log.i(TAG, "app_dir = "+ sdFile.getAbsolutePath());
+
 			try {
-				fos = new FileOutputStream(file);
+				fos = new FileOutputStream(sdFile, APPEND);
 			} catch (FileNotFoundException e) {
+				Log.e(TAG, "Can't write to SD Card.  Check for WRITE_EXTERNAL_STORAGE permission");
 				return null;
 			}
 			break;
@@ -62,20 +66,22 @@ public class LogFile {
 	    Logger.setLogFile(logFile);
 		return logFile;
 	}
+	
 
 	public LogFile(PrintStream printStream) {
 		this.printStream = printStream;
 	}
 
 	public void log(int level, String tag, String msg) {
-		printStream.println(String.format("%d %s %s", level, tag, msg));
+		printStream.println(String.format("(%d) %s %s", level, tag, msg));
 	}
 
+	// TODO: Fix the logging format
 	public void log(int level, String tag, String msg, Throwable tr) {
 		if ((tr == null) || (tr.getMessage() == null)) {
-			printStream.println(String.format("%d %s %s", level, tag, msg));
+			printStream.println(String.format("(%d) %s %s", level, tag, msg));
 		} else {
-			printStream.println(String.format("%d %s %s %s", level, tag, msg, tr.getMessage()));
+			printStream.println(String.format("(%d) %s %s %s", level, tag, msg, tr.getMessage()));
 		}
 	}
 	

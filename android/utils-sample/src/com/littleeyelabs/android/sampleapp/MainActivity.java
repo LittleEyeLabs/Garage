@@ -1,11 +1,14 @@
 package com.littleeyelabs.android.sampleapp;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,19 +57,26 @@ public class MainActivity extends Activity {
 				textView.setText(getLogs());
 			}
 		});
-		
-		file = LogFile.initialize(this, Folder.APP_DIR);
+	
+		file = LogFile.initialize(this);
 	}
 
 	// Test function
 	public String getLogs() {
 		FileInputStream fis;
+		
 		try {
-			fis = openFileInput("log.txt");
+			if (LogFile.WHERE_TO_WRITE == Folder.APP_DIR) {
+				fis = openFileInput(LogFile.FILE_NAME);
+			} else {
+				File sdFile = new File(getExternalFilesDir(null), LogFile.FILE_NAME);
+				fis = new FileInputStream(sdFile);
+			}
 		} catch (FileNotFoundException e) {
 			return null;
 		}
 		StringBuffer fileContent = new StringBuffer();
+		fileContent.append("Folder = " + LogFile.WHERE_TO_WRITE + "\n");
 		
 		byte[] buffer = new byte[1024];
 		try {
