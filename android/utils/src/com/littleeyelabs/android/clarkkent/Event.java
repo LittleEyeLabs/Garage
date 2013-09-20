@@ -9,9 +9,8 @@ public class Event extends Reportable {
 	}
 
 	@Override
-	public Object getData() {
-		// TODO Auto-generated method stub
-		return null;
+	public void report() {
+		EventService.report(this);
 	}
 
 }

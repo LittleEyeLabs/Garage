@@ -3,23 +3,24 @@ package com.littleeyelabs.android.sampleapp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.littleeyelabs.android.clarkkent.ClarkKent;
+import com.littleeyelabs.android.clarkkent.Failure;
 import com.littleeyelabs.android.logging.Folder;
 import com.littleeyelabs.android.logging.LogFile;
 import com.littleeyelabs.android.logging.Logger;
 
 public class MainActivity extends Activity {
+	private static final String TAG = "MainActivity";
 
 	Button button1;
 	Button button2;
@@ -45,6 +46,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Logger.Info("Main", "count = "+count);
 				textView.setText("Logged count");
+				new Failure("testing errors").report();
 				count++;
 				button1.setText("Log "+count);
 			}
@@ -59,6 +61,8 @@ public class MainActivity extends Activity {
 		});
 	
 		file = LogFile.initialize(this);
+		
+		ClarkKent.initialize(getApplicationContext());
 	}
 
 	// Test function

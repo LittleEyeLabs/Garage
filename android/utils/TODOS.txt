@@ -1,0 +1,15 @@
+Logger:
+- Rollover of logfile
+- When writing to separate logfile, format the log nicely
+- Write exception stack properly in the logfile
+- Allow user to upload this log file to a simple REST service
+- Use varargs to prevent unnecessary string creation
+
+ClarkKent:
+- Implement Reporters: Parse, Crashlytics
+- Initialize Crashlytics in a thread because of slow startup time
+- Infrastructure for a Reporter to persist to disk (offline mode)
+- Infrastructure for a Reporter to batch up reportables (use network efficiently)
+
+
+When this exceeds 10 items, move this list to GitHub issues :-)

@@ -9,9 +9,10 @@ public class Latency extends Reportable {
 	}
 
 	@Override
-	public Object getData() {
+	public void report() {
+		LatencyService.report(this);
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }

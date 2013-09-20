@@ -2,15 +2,22 @@ package com.littleeyelabs.android.clarkkent;
 
 import android.content.Context;
 
-//internal to the package
-class ParseReporter implements ErrorReporter, LatencyReporter, EventReporter {
+import com.parse.Parse;
+import com.parse.ParseObject;
 
-	public ParseReporter(Context context) {
+//internal to the package
+class ParseReporter implements FailureReporter, LatencyReporter, EventReporter {
+
+	public ParseReporter(Context context, String applicationId, String clientKey) {
+		Parse.initialize(context, applicationId, clientKey);
 	}
 	
 	@Override
-	public void log(Error error) {
-		// TODO Auto-generated method stub
+	public void log(Failure error) {
+		ParseObject parseObject = new ParseObject(error.category);
+		parseObject.put("creationTime", error.creationTime);
+		parseObject.put("message", error.message);
+		parseObject.saveInBackground();
 	}
 
 	@Override

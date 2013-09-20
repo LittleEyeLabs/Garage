@@ -3,14 +3,14 @@ package com.littleeyelabs.android.clarkkent;
 import android.content.Context;
 
 //internal to the package
-class CrittercismReporter implements ErrorReporter {
+class CrittercismReporter implements FailureReporter {
 
 	public CrittercismReporter(Context context) {
 		
 	}
 
 	@Override
-	public void log(Error error) {
+	public void log(Failure error) {
 		// TODO Auto-generated method stub
 
 	}

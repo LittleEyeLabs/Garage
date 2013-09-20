@@ -2,10 +2,10 @@ package com.littleeyelabs.android.clarkkent;
 
 
 //internal to the package
-class GoogleAnalyticsReporter implements ErrorReporter, LatencyReporter, EventReporter {
+class GoogleAnalyticsReporter implements FailureReporter, LatencyReporter, EventReporter {
 
 	@Override
-	public void log(Error error) {
+	public void log(Failure error) {
 		// TODO Auto-generated method stub
 	}
 
