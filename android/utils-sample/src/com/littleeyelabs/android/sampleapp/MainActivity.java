@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 		file = LogFile.initialize(this);
 		
 		// Initialize ClarkKent
-		ClarkKentConfiguration.initialize(getApplicationContext());
+		ClarkKentConfiguration.initialize(getApplicationContext(), BuildConfig.DEBUG);
 	}
 
 	
