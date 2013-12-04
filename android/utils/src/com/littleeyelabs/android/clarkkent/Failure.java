@@ -12,16 +12,14 @@ package com.littleeyelabs.android.clarkkent;
  */
 public class Failure extends Reportable {
 	Throwable throwable = null;  // optional
-	String message = null;
 
-	public Failure(String category, String message) {
-		super(category);
-		this.message = message;
+	public Failure(String category, String name) {
+		super(category, name);
+		this.name = name;
 	}
 	
-	public Failure(String category, String message, Throwable t) {
-		super(category);
-		this.message = message;
+	public Failure(String category, String name, Throwable t) {
+		super(category, name);
 		this.throwable = t;
 	}
 

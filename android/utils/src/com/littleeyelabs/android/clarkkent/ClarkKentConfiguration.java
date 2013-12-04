@@ -16,8 +16,8 @@ public class ClarkKentConfiguration {
 	// IMPORTANT: Put your application registration values here
 	private static final String PARSE_APPID = "";
 	private static final String PARSE_CLIENTID = "";
-	
-	private static final String CRIT_TOKEN = "";
+	private static final String CRIT_APPID = "";
+	// Crashlytics gets the app token from the manifest file.  Sigh...
 
 	
 	public static void initialize(Context context) {
@@ -26,7 +26,7 @@ public class ClarkKentConfiguration {
 			// Instantiate the various reporters you will use.
 			//
 			ParseReporter parse = new ParseReporter(context, PARSE_APPID, PARSE_CLIENTID);
-			CrittercismReporter crittercism = new CrittercismReporter(context, CRIT_TOKEN);
+			CrittercismReporter crittercism = new CrittercismReporter(context, CRIT_APPID);
 			CrashlyticsReporter crashlytics = new CrashlyticsReporter(context);
 			
 			GoogleAnalyticsReporter googleAnalytics = new GoogleAnalyticsReporter();

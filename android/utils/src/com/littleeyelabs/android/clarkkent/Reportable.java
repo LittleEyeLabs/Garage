@@ -1,6 +1,5 @@
 package com.littleeyelabs.android.clarkkent;
 
-import java.util.Date;
 
 /**
  * This is the base implementation for each reportable object
@@ -17,13 +16,19 @@ abstract class Reportable {
 	String category;
 	
 	/**
+	 * The actual event/failure/latency
+	 */
+	String name;
+	
+	/**
 	 * What time this was reported in the app
 	 */
 	long creationTime;
 
-	public Reportable(String category) {
+	public Reportable(String category, String name) {
 		this.category = category;
-		creationTime = new Date().getTime();
+		this.name = name;
+		creationTime = System.currentTimeMillis();
 	}
 	
 	public abstract void report();
