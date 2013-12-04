@@ -1,23 +1,24 @@
 package com.littleeyelabs.android.clarkkent;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.parse.Parse;
-
 import android.content.Context;
 
 /**
- * Configure remote reporting plugins
+ * Configure reporters - pick the ones you care about, and 
+ * provide the various keys/etc required by each of them
+ * 
+ * TODO: Configuration should not be part of the library
  * 
  * @author gaurav
  */
-public class ClarkKent {
+public class ClarkKentConfiguration {
 	private static boolean initialized = false;
 	
-	// TODO: Put your registration values here
+	// IMPORTANT: Put your application registration values here
 	private static final String PARSE_APPID = "";
 	private static final String PARSE_CLIENTID = "";
+	
+	private static final String CRIT_TOKEN = "";
+
 	
 	public static void initialize(Context context) {
 		if (!initialized) {
@@ -25,12 +26,15 @@ public class ClarkKent {
 			// Instantiate the various reporters you will use.
 			//
 			ParseReporter parse = new ParseReporter(context, PARSE_APPID, PARSE_CLIENTID);
-			CrittercismReporter crittercism = new CrittercismReporter(context);
+			CrittercismReporter crittercism = new CrittercismReporter(context, CRIT_TOKEN);
+			CrashlyticsReporter crashlytics = new CrashlyticsReporter(context);
+			
 			GoogleAnalyticsReporter googleAnalytics = new GoogleAnalyticsReporter();
 			
 			// Set Failure Reporters
 			FailureService.addReporter(parse);
 			FailureService.addReporter(crittercism);
+			FailureService.addReporter(crashlytics);
 	
 			// Event Reporters
 			EventService.addReporter(parse);

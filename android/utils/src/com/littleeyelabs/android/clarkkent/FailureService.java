@@ -3,7 +3,7 @@ package com.littleeyelabs.android.clarkkent;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// internal to the package, should not be visible to clients of the library
 class FailureService {
 	private static List<FailureReporter> reporters = null;
 

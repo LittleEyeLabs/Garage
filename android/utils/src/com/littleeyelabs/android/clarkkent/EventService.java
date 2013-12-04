@@ -3,7 +3,7 @@ package com.littleeyelabs.android.clarkkent;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// internal to the package, should not be visible to clients of the library
 class EventService {
 	private static List<EventReporter> reporters = null;
 
@@ -19,11 +19,9 @@ class EventService {
 	}
 
 	public static void report(Event event) {
-		
-	}
-
-	public static void report(String tag, String event) {
-		
+		for (EventReporter reporter:reporters) {
+			reporter.log(event);
+		}
 	}
 
 }

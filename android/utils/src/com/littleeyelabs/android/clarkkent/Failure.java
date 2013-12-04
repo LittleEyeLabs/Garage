@@ -5,8 +5,8 @@ package com.littleeyelabs.android.clarkkent;
 /**
  * Simple instance of a @Failure
  * 
- * Each major failure can be a subclass, especially, if it needs to contain 
- * information relevant to that failure
+ * Each failure needs to define a category, and a failure message.
+ * Can optionally provide a throwable.
  * 
  * @author gaurav
  */
@@ -14,19 +14,20 @@ public class Failure extends Reportable {
 	Throwable throwable = null;  // optional
 	String message = null;
 
-	public Failure(String message) {
+	public Failure(String category, String message) {
+		super(category);
 		this.message = message;
 	}
 	
-	public Failure(String message, Throwable t) {
+	public Failure(String category, String message, Throwable t) {
+		super(category);
 		this.message = message;
 		this.throwable = t;
 	}
 
 	@Override
 	public void report() {
-		// TODO Auto-generated method stub
-		
+		FailureService.report(this);
 	}
 
 }

@@ -3,10 +3,11 @@ package com.littleeyelabs.android.clarkkent;
 import android.content.Context;
 
 //internal to the package
-class CrittercismReporter implements FailureReporter {
+class CrashlyticsReporter implements FailureReporter {
 
-	public CrittercismReporter(Context context, String token) {
-		
+	
+	public CrashlyticsReporter(Context context) {
+		// Crashlytics gets the app token from the manifest file.  Sigh...
 	}
 
 	@Override

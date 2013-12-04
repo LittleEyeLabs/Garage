@@ -10,6 +10,6 @@ ClarkKent:
 - Initialize Crashlytics in a thread because of slow startup time
 - Infrastructure for a Reporter to persist to disk (offline mode)
 - Infrastructure for a Reporter to batch up reportables (use network efficiently)
-
+- Think about what a subclass of a Event/Failure/Latency would look like.  How can a *Reporter understand custom fields?
 
 When this exceeds 10 items, move this list to GitHub issues :-)

@@ -3,6 +3,7 @@ package com.littleeyelabs.android.clarkkent;
 import java.util.ArrayList;
 import java.util.List;
 
+// internal to the package, should not be visible to clients of the library
 class LatencyService {
 	private static List<LatencyReporter> reporters = null;
 
@@ -17,10 +18,11 @@ class LatencyService {
 		reporters.add(reporter);
 	}
 
-	public static void report(Latency error) {
-	}
+	public static void report(Latency latency) {
+		for (LatencyReporter reporter:reporters) {
+			reporter.log(latency);
+		}
 
-	public static void report(String action, long timeTaken) {
 	}
 
 }

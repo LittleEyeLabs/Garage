@@ -1,7 +1,6 @@
 package com.littleeyelabs.android.clarkkent;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * This is the base implementation for each reportable object
@@ -12,21 +11,15 @@ import java.util.Map;
  * @author gaurav
  */
 abstract class Reportable {
-	private final static String GENERIC = "Generic";
 	/**
-	 * The type of @Reportable
+	 * Each @Reportable type can define categories.
 	 */
 	String category;
 	
 	/**
-	 * When this was reported on the app
+	 * What time this was reported in the app
 	 */
 	long creationTime;
-
-	public Reportable() {
-		this.category = GENERIC;
-		creationTime = new Date().getTime();
-	}
 
 	public Reportable(String category) {
 		this.category = category;
